@@ -38,7 +38,7 @@ public class RestRes<T> implements Serializable {
     }
 
 
-    private RestRes(int code,String msg,String trace,T data) {
+    private RestRes(int code, String msg, String trace, T data) {
         this.code = code;
         this.msg = msg;
         this.data = data;
@@ -64,7 +64,7 @@ public class RestRes<T> implements Serializable {
      * @return
      */
     public static<T> RestRes<T> success(T data){
-        return new RestRes(SUCCESS_CODE,"","",data);
+        return new RestRes(SUCCESS_CODE, null, null, data);
     }
 
     /**
@@ -75,7 +75,7 @@ public class RestRes<T> implements Serializable {
      * @return
      */
     public static<T> RestRes<T> fail(int code, String msg){
-        return new RestRes(code,msg,"",null);
+        return new RestRes(code, msg, null, null);
     }
 
     /**
@@ -87,7 +87,7 @@ public class RestRes<T> implements Serializable {
      * @return
      */
     public static<T> RestRes<T> fail(int code, String msg, Exception e){
-        return new RestRes(code,msg,toTrace(e),null);
+        return new RestRes(code, msg, toTrace(e), null);
     }
 
     /**
