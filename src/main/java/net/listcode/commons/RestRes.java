@@ -12,6 +12,7 @@ import java.io.Serializable;
 public class RestRes<T> implements Serializable {
     private static final long serialVersionUID = -8524070495317253930L;
     private static final int SUCCESS_CODE = 0;
+    private static final int UNDEFINED_ERROR_CODE = -1;
 
     /**返回码*/
     private int code;
@@ -82,33 +83,46 @@ public class RestRes<T> implements Serializable {
      * 请求失败
      * @param code
      * @param msg
-     * @param e
+     * @param throwable
      * @param <T>
      * @return
      */
-    public static<T> RestRes<T> fail(int code, String msg, Exception e){
-        return new RestRes(code, msg, toTrace(e), null);
+    public static<T> RestRes<T> fail(int code, String msg, Throwable throwable){
+        return new RestRes(code, msg, toTrace(throwable), null);
     }
 
     /**
      * 请求失败
-     * @param e
+     * @param code
+     * @param msg
+     * @param trace
      * @param <T>
      * @return
      */
-    public static<T> RestRes<T> exception(Exception e){
-        return fail(-1, null, e);
+    public static<T> RestRes<T> fail(int code, String msg, String trace){
+        return new RestRes(code, msg, trace, null);
+    }
+
+    /**
+     * 请求失败
+     * @param throwable
+     * @param <T>
+     * @return
+     */
+    public static<T> RestRes<T> exception(Throwable throwable){
+        return fail(UNDEFINED_ERROR_CODE, null, throwable);
     }
 
 
-    private static String toTrace(Exception e) {
-        if (!RestRes.isOpenTrace) {
+    private static String toTrace(Throwable e) {
+        if (!RestRes.isOpenTrace || e == null) {
             return null;
         }
         StringBuilder result = new StringBuilder();
+        result.append(e.getMessage()).append("\r\n");
         StackTraceElement[] trace = e.getStackTrace();
         for (StackTraceElement s : trace) {
-            result.append("\t    at ").append(s).append("\r\n");
+            result.append("\tat ").append(s).append("\r\n");
         }
         return result.toString();
     }
