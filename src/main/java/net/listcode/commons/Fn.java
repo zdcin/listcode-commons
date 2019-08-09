@@ -1,5 +1,8 @@
 package net.listcode.commons;
 
+import net.listcode.commons.types.MyTuple;
+import net.listcode.commons.types.MyTuple3;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;

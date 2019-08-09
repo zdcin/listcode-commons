@@ -1,4 +1,4 @@
-package net.listcode.commons;
+package net.listcode.commons.types;
 
 import lombok.Value;
 
