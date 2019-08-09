@@ -34,20 +34,4 @@ public class ERR implements Serializable {
         return new RuntimeException(String.format("Error[code, msg]=[%d, %s]", this.getCode(), this.getMsg()), this.getThrowable());
     }
 
-//    public static ERR build(ERR_CODE ecode) {
-//        return new ERR(ecode.getCode(), ecode.getMsg());
-//    }
-//
-//    public static ERR build(ERR_CODE ecode, String appendMsg) {
-//        return new ERR(ecode.getCode(), ecode.getMsg() + appendMsg);
-//    }
-//
-//    public static ERR build(ERR_CODE ecode, String appendMsg, Throwable throwable) {
-//        return new ERR(ecode.getCode(), ecode.getMsg() + appendMsg, throwable);
-//    }
-//
-//    public static ERR build(ERR_CODE ecode, Throwable throwable) {
-//        return new ERR(ecode.getCode(), ecode.getMsg(), throwable);
-//    }
-
 }

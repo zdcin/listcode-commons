@@ -27,7 +27,7 @@ public class Errors {
         return errorCodeDict.get(code);
     }
 
-    public static final ERR_CODE NO_PERMISSION = createAndCheck(1, "无访问权限");
-    public static final ERR_CODE DATA_DUPLICATE = createAndCheck(2, "数据重复");
+    public static final ERR_CODE E1_NO_PERMISSION = createAndCheck(1, "无访问权限");
+    public static final ERR_CODE E2_DATA_DUPLICATE = createAndCheck(2, "数据重复");
 
 }

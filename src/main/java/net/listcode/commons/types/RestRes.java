@@ -2,7 +2,10 @@ package net.listcode.commons.types;
 
 import lombok.Data;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.Serializable;
+import java.io.StringWriter;
 
 /**
  * Rest接口返回的包装对象
@@ -114,17 +117,29 @@ public class RestRes<T> implements Serializable {
     }
 
 
-    private static String toTrace(Throwable e) {
-        if (!RestRes.isOpenTrace || e == null) {
+    private static String toTrace(Throwable throwable) {
+        if (!RestRes.isOpenTrace || throwable == null) {
             return null;
         }
-        StringBuilder result = new StringBuilder();
-        result.append(e.getMessage()).append("\r\n");
-        StackTraceElement[] trace = e.getStackTrace();
-        for (StackTraceElement s : trace) {
-            result.append("\tat ").append(s).append("\r\n");
+//        StringBuilder result = new StringBuilder();
+//        result.append(e.getMessage()).append("\r\n");
+//        StackTraceElement[] trace = e.getStackTrace();
+//        for (StackTraceElement s : trace) {
+//            result.append("\tat ").append(s).append("\r\n");
+//        }
+//        StringWriter sw = null;
+        //PrintWriter pw = null;
+        try (StringWriter stringWriter = new StringWriter()){
+            try (PrintWriter printWriter = new PrintWriter(stringWriter)) {
+                throwable.printStackTrace(printWriter);
+                printWriter.flush();
+                stringWriter.flush();
+                return stringWriter.toString();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return null;
         }
-        return result.toString();
     }
 
 }
