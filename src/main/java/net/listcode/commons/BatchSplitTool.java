@@ -11,9 +11,9 @@ import java.util.function.Consumer;
  * TODO 目前只处理了写入无返回值的情况，如果有返回值，目前不支持，需要扩展
  * @author LeoZhang
  */
-public class BatchUtil {
+public class BatchSplitTool {
 
-    private BatchUtil(){}
+    private BatchSplitTool(){}
 
     public enum SaveErrorPolicy {
         /**
