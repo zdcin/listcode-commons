@@ -22,10 +22,8 @@ public class TableIterator<T> implements Iterable<T>{
      * @param findFn 输入T,返回list《T》的查询功能
      * @param choiseNextParaFn 从listT中,取出一个, 作为下一次的输入条件
      */
-    public TableIterator(
-        Function<T, List<T>> findFn,
-        Function<List<T>, T> choiseNextParaFn
-    ) {
+    public TableIterator(Function<T, List<T>> findFn,
+                         Function<List<T>, T> choiseNextParaFn) {
 
     }
 
@@ -36,10 +34,10 @@ public class TableIterator<T> implements Iterable<T>{
      * @param loadBatchSize 内部每批加载的size
      * @param asyncLoad 是否异步加载
      */
-    public TableIterator(
-            Function<T, List<T>> findFn,
-            Function<List<T>, T> choiseNextParaFn, int loadBatchSize, boolean asyncLoad
-    ) {
+    public TableIterator(Function<T, List<T>> findFn,
+                         Function<List<T>, T> choiseNextParaFn,
+                         int loadBatchSize,
+                         boolean asyncLoad) {
 
     }
 
