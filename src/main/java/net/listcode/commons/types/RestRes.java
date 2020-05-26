@@ -10,6 +10,8 @@ import java.io.StringWriter;
 /**
  * Rest接口返回的包装对象
  * @param <T>
+ *
+ *     TODO :可以根据常见的错误,指定几个错误方法,比如notfound, fobiden, serverError, input_error, 依赖系统错误等, 参考http 错误码,以及hutool
  */
 @Data
 public class RestRes<T> implements Serializable {
