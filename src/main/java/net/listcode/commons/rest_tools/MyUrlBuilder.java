@@ -2,7 +2,6 @@ package net.listcode.commons.rest_tools;
 
 import net.listcode.commons.Fn;
 import org.apache.commons.beanutils.BeanMap;
-import org.apache.commons.beanutils.BeanUtils;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.util.UriBuilder;
@@ -18,6 +17,9 @@ import java.util.Map;
 /**
  * 自己写的url构造器
  * 根据一个url生成基本部分; 可以设置query参数, 可以赋值路径变量
+ *
+ * TODO: 考虑默认的urlEncoding 字符集问题等
+ * 注意!! 复杂的url不要使用这个类,比如里边带了特定浏览器才能是别的特殊字符等
  *
  * @author leo
  */
