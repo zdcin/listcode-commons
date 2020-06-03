@@ -23,7 +23,7 @@ import java.util.Map;
  *
  * @author leo
  */
-public class MyUrlBuilder {
+public class MyUrlBuilder implements Cloneable{
 //    {
 //        UriBuilder builder = UriComponentsBuilder.fromUriString("http://www.baidu.com/{aaa}/{bbb}index.html");
 //        MultiValueMap<String, String> map = new LinkedMultiValueMap<>();
@@ -138,8 +138,9 @@ public class MyUrlBuilder {
     public MyUrlBuilder addParamsWithBean(Object paramsBean) {
         BeanMap bm = new BeanMap(paramsBean);
 
-        Map<String, Object> paramsMap = Fn.toMap(bm.entrySet(),
-                x -> x.getValue().toString(),
+        Map<String, Object> paramsMap = Fn.toMap(
+                Fn.filter(bm.entrySet(), e->!e.getKey().equals("class")),
+                x -> x.getKey().toString(),
                 x -> x.getValue() == null ? "" : x.getValue().toString());
         return this.addParams(paramsMap);
     }
@@ -183,6 +184,23 @@ public class MyUrlBuilder {
      */
     public URL toURL() throws MalformedURLException {
         return this.inner.build(this.vars).toURL();
+    }
+
+    /**
+     * 对clone方法的包装
+     * @return
+     */
+    public MyUrlBuilder copyAsNewOne() {
+        return (MyUrlBuilder)this.clone();
+    }
+
+    @Override
+    public Object clone() {
+        UriComponentsBuilder newInner = (UriComponentsBuilder)((UriComponentsBuilder) this.inner).clone();
+        MyUrlBuilder newOne = new MyUrlBuilder(newInner);
+        newOne.usePrefix = this.usePrefix;
+        newOne.vars = new HashMap<>(this.vars);
+        return newOne;
     }
 
 }

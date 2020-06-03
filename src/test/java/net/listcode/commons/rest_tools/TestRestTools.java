@@ -1,5 +1,7 @@
 package net.listcode.commons.rest_tools;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -20,7 +22,7 @@ public class TestRestTools {
         map.add("a",  "1");
         map.add("b",  "1");
         builder.queryParams(map);
-        Map<String, String > vars = new HashMap<>();
+        Map<String, String> vars = new HashMap<>();
 
         {
             vars.put("aaa", "AAA");
@@ -39,9 +41,21 @@ public class TestRestTools {
 
         System.out.println(builder.toUrlString());
     }
+
+    private static void testUriBuilder3() {
+        //使用bean作为参数
+        {
+            MyUrlBuilder baiduPrefixBuilder = MyUrlBuilder.fromUriPrefix("https://www.baidu.com");
+            baiduPrefixBuilder.addPath("/index.html");
+            baiduPrefixBuilder.addParamsWithBean(new User(1, "SU&LI"));
+            String s = baiduPrefixBuilder.toUrlString();
+            System.out.println("baidu prefix=" + s);
+        }
+    }
     public static void main(String[] args) {
         testUriBuilder();
         testUriBuilder2();
+        testUriBuilder3();
 
         //1. 动态header, 可以根据token生成函数自动更新每次调用的token,cookie等
         Supplier<Map<String, List<String>>> dynamicHeaderSupplier = () -> {
@@ -57,7 +71,7 @@ public class TestRestTools {
         headers.put("h2", Arrays.asList("1"));
 
         //3. 设置超时和header
-        RestTemplate c = RestClientFactory.getClient(1L, 1L,
+        RestTemplate c = RestClientFactory.getClient(100L, 100L,
                 headers,
                 dynamicHeaderSupplier);
         //4. 根据urlBuilder, 生成url, 可以支持前缀, 路径参数, 请求参数
@@ -66,5 +80,12 @@ public class TestRestTools {
 
         res = c.getForObject("http://1admin.aixuexi.com/diy/to_publisher/cover/28", String.class);
         System.out.println(res);
+
+    }
+    @Data
+    @AllArgsConstructor
+    public static class User{
+        private int id;
+        private String name;
     }
 }
